@@ -9,9 +9,11 @@ const MenuItem = ({ item }) => {
         alt=""
       />
       <div className="">
-        <h3 className="uppercase">{name}-------</h3>
+        <div className="flex justify-between items-center">
+          <h3 className="uppercase">{name}-------</h3>
+          <p className="text-yellow-600">$ {price}</p>
+        </div>
         <p>{recipe}</p>
-        <p className="text-yellow-600">$ {price}</p>
       </div>
     </div>
   );
