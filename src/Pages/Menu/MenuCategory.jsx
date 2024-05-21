@@ -13,12 +13,14 @@ const MenuCategory = ({ items, title, subtitle, coverImg }) => {
           <MenuItem key={idx} item={item}></MenuItem>
         ))}
       </div>
-      {/* <Link
-        to={`/order/${title}`}
-        className="btn btn-outline border-0 border-b-4 mt-4 text-center uppercase"
-      >
-        Add to Cart
-      </Link> */}
+      <div className="flex justify-center items-center my-6">
+        <Link
+          to={`/order/${title}`}
+          className="btn btn-outline border-0 border-b-4 mt-4 text-center uppercase"
+        >
+          Add to Cart
+        </Link>
+      </div>
     </div>
   );
 };
