@@ -1,4 +1,8 @@
-import { onAuthStateChanged } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  onAuthStateChanged,
+  //   updateProfile,
+} from "firebase/auth";
 import { createContext, useEffect, useState } from "react";
 import { auth } from "../Firebase/firebase.config";
 
@@ -7,6 +11,29 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  //   const createUser = async (name, email, password) => {
+  //     setLoading(true);
+  //     try {
+  //       const userCredential = await createUserWithEmailAndPassword(
+  //         auth,
+  //         email,
+  //         password
+  //       );
+  //       await updateProfile(userCredential.user, {
+  //         displayName: name,
+  //       });
+  //       return userCredential.user;
+  //     } catch (error) {
+  //       console.error(error.message);
+  //       throw error;
+  //     }
+  //   };
+
+  const createUser = (email, password) => {
+    setLoading(true);
+    return createUserWithEmailAndPassword(auth, email, password);
+  };
 
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -21,6 +48,7 @@ const AuthProvider = ({ children }) => {
   const authInfo = {
     user,
     loading,
+    createUser,
   };
 
   return (

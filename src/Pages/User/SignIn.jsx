@@ -8,6 +8,7 @@ import {
 } from "react-simple-captcha";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const SignIn = () => {
   const captchaRef = useRef(null);
@@ -37,6 +38,9 @@ const SignIn = () => {
         }}
         className="hero min-h-screen bg-base-200"
       >
+        <Helmet>
+          <title>Bistro Boss | Sign In</title>
+        </Helmet>
         <div
           //   style={{
           //     backgroundImage: `url(${imgBG})`,
