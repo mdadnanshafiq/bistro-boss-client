@@ -1,6 +1,14 @@
+import { useContext } from "react";
 import { Link } from "react-router-dom";
+import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Nav = () => {
+  const { user, logOut } = useContext(AuthContext);
+  const handleLogout = () => {
+    logOut()
+      .then(() => {})
+      .catch((error) => console.error(error.message));
+  };
   const navlinks = (
     <>
       <li>
@@ -54,7 +62,38 @@ const Nav = () => {
           <ul className="menu menu-horizontal px-1">{navlinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Logout</a>
+          {user ? (
+            <>
+              <div className="dropdown  dropdown-end mr-4">
+                <div
+                  tabIndex={0}
+                  role="button"
+                  className="btn btn-ghost hover:bg-base btn-circle avatar "
+                >
+                  <div
+                    className="w-10 rounded-full "
+                    // data-tooltip-id="my-tooltip"
+                    // data-tooltip-content={user.displayName}
+                    // data-tooltip-place="left"
+                  >
+                    <img
+                      alt=""
+                      src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
+                    />
+                  </div>
+                </div>
+              </div>
+              <button onClick={handleLogout} className="btn">
+                Logout
+              </button>
+            </>
+          ) : (
+            <>
+              <Link to="/signin" className="btn">
+                Sign In
+              </Link>
+            </>
+          )}
         </div>
       </div>
     </div>

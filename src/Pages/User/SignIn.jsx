@@ -3,16 +3,28 @@ import imgBG from "../../assets/others/authentication.png";
 import {
   loadCaptchaEnginge,
   LoadCanvasTemplate,
-  LoadCanvasTemplateNoReload,
   validateCaptcha,
 } from "react-simple-captcha";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
+import "animate.css";
 
 const SignIn = () => {
-  const captchaRef = useRef(null);
+  const { signUser } = useContext(AuthContext);
+
   const [disabled, setDisabled] = useState(true);
+
+  const handleValidateCaptcha = (e) => {
+    const user_captcha_value = e.target.value;
+    if (validateCaptcha(user_captcha_value)) {
+      setDisabled(false);
+    } else {
+      setDisabled(true);
+    }
+  };
 
   useEffect(() => {
     loadCaptchaEnginge(6);
@@ -22,14 +34,25 @@ const SignIn = () => {
     const form = e.target;
     const email = form.email.value;
     const password = form.password.value;
+
+    signUser(email, password)
+      .then((result) => {
+        console.log(result);
+        Swal.fire({
+          title: "Success!",
+          showClass: {
+            popup: `animate__animated animate__fadeInUp animate__faster`,
+          },
+          hideClass: {
+            popup: `animate__animated animate__fadeOutDown animate__faster`,
+          },
+        });
+      })
+      .catch((error) => {
+        console.error(error.message);
+      });
   };
 
-  const handleValidateCaptcha = () => {
-    const user_captcha_value = captchaRef.current.value;
-    if (validateCaptcha(user_captcha_value)) {
-      setDisabled(false);
-    }
-  };
   return (
     <div>
       <div
@@ -91,19 +114,20 @@ const SignIn = () => {
                   <LoadCanvasTemplate></LoadCanvasTemplate>
                 </label>
                 <input
-                  ref={captchaRef}
+                  onBlur={handleValidateCaptcha}
+                  //   ref={captchaRef}
                   type="text"
                   name="captcha"
                   placeholder="Type the captcha"
                   className="input input-bordered"
                   required
                 />
-                <button
+                {/* <button
                   onClick={handleValidateCaptcha}
                   className="btn btn-xs btn-outline"
                 >
                   Validate
-                </button>
+                </button> */}
               </div>
               <div className="form-control mt-6">
                 <button
