@@ -6,7 +6,7 @@ import {
   validateCaptcha,
 } from "react-simple-captcha";
 import { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
@@ -16,6 +16,10 @@ const SignIn = () => {
   const { signUser } = useContext(AuthContext);
 
   const [disabled, setDisabled] = useState(true);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  let from = location.state?.from?.pathname || "/";
 
   const handleValidateCaptcha = (e) => {
     const user_captcha_value = e.target.value;
@@ -47,6 +51,9 @@ const SignIn = () => {
             popup: `animate__animated animate__fadeOutDown animate__faster`,
           },
         });
+        setTimeout(() => {
+          navigate(from, { replace: true });
+        }, 1500);
       })
       .catch((error) => {
         console.error(error.message);

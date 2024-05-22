@@ -1,12 +1,15 @@
 import { useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
 
 const Nav = () => {
   const { user, logOut } = useContext(AuthContext);
+  const navigate = useNavigate();
   const handleLogout = () => {
     logOut()
-      .then(() => {})
+      .then(() => {
+        navigate("/");
+      })
       .catch((error) => console.error(error.message));
   };
   const navlinks = (
@@ -18,7 +21,7 @@ const Nav = () => {
         <Link to="/menu">Our Menu</Link>
       </li>
       <li>
-        <Link to="/order/salad">Order Food</Link>
+        <Link to="/order">Order Food</Link>
       </li>
       <li>
         <Link to="/signin">Sign In</Link>
@@ -76,10 +79,7 @@ const Nav = () => {
                     // data-tooltip-content={user.displayName}
                     // data-tooltip-place="left"
                   >
-                    <img
-                      alt=""
-                      src="https://as1.ftcdn.net/v2/jpg/03/46/83/96/1000_F_346839683_6nAPzbhpSkIpb8pmAwufkC7c5eD7wYws.jpg"
-                    />
+                    <img alt="" src={user.photoURL} />
                   </div>
                 </div>
               </div>
