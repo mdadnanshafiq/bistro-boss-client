@@ -1,13 +1,15 @@
-import { Outlet } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import Footer from "../Pages/Home/Shared/Footer";
 import Nav from "../Pages/Home/Shared/Nav";
 
 const Main = () => {
+  const location = useLocation();
+  const noHF = location.pathname.includes("signin");
   return (
     <div>
-      <Nav></Nav>
+      {noHF || <Nav></Nav>}
       <Outlet></Outlet>
-      <Footer></Footer>
+      {noHF || <Footer></Footer>}
     </div>
   );
 };

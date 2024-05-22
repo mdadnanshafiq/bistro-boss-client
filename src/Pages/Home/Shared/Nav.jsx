@@ -12,6 +12,12 @@ const Nav = () => {
       <li>
         <Link to="/order/salad">Order Food</Link>
       </li>
+      <li>
+        <Link to="/signin">Sign In</Link>
+      </li>
+      <li>
+        <Link to="/signup">Sign Up</Link>
+      </li>
     </>
   );
   return (
@@ -48,7 +54,7 @@ const Nav = () => {
           <ul className="menu menu-horizontal px-1">{navlinks}</ul>
         </div>
         <div className="navbar-end">
-          <a className="btn">Button</a>
+          <a className="btn">Logout</a>
         </div>
       </div>
     </div>
