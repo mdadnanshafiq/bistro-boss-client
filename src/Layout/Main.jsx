@@ -4,7 +4,9 @@ import Nav from "../Pages/Home/Shared/Nav";
 
 const Main = () => {
   const location = useLocation();
-  const noHF = location.pathname.includes("signin");
+  const noHF =
+    location.pathname.includes("signin") ||
+    location.pathname.includes("signup");
   return (
     <div>
       {noHF || <Nav></Nav>}
