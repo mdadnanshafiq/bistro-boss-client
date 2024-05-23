@@ -7,8 +7,10 @@ import { IoMailOutline } from "react-icons/io5";
 import { MdOutlineShoppingCart } from "react-icons/md";
 import { RiRestaurantLine } from "react-icons/ri";
 import { NavLink, Outlet } from "react-router-dom";
+import useCart from "../Hooks/useCart";
 
 const Dashboard = () => {
+  const [cart] = useCart();
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -61,7 +63,7 @@ const Dashboard = () => {
               className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
             >
               <RiRestaurantLine />
-              My Cart
+              My Cart ({cart.length})
             </NavLink>
             <NavLink
               to="/dashboard"

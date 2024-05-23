@@ -1,13 +1,40 @@
 import { FaRegTrashAlt } from "react-icons/fa";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
 import useCart from "../../Hooks/useCart";
+import Swal from "sweetalert2";
+import useAxiosSecure from "../../Hooks/useAxiosSecure";
 
 const Cart = () => {
-  const [cart] = useCart();
+  const axiosSecure = useAxiosSecure();
+  const [cart, refetch] = useCart();
   const totalPrice = cart.reduce(
     (total, item) => total + parseFloat(item.price),
     0
   );
+  const handleDelete = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axiosSecure.delete(`/carts/${id}`).then((res) => {
+          if (res.data.deletedCount > 0) {
+            refetch();
+            Swal.fire({
+              title: "Deleted!",
+              text: "Your file has been deleted.",
+              icon: "success",
+            });
+          }
+        });
+      }
+    });
+  };
   return (
     <div className="w-full mx-auto bg-base-200 min-h-screen">
       <SectionTitle
@@ -56,7 +83,10 @@ const Cart = () => {
                     </td>
                     <td>$ {item.price}</td>
                     <th>
-                      <button className="btn btn-ghost btn-xs">
+                      <button
+                        onClick={() => handleDelete(item._id)}
+                        className="btn btn-outline btn-circle btn-xs text-red-500"
+                      >
                         <FaRegTrashAlt />
                       </button>
                     </th>
