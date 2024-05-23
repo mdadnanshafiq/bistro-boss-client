@@ -127,7 +127,7 @@ const SignIn = () => {
                   name="captcha"
                   placeholder="Type the captcha"
                   className="input input-bordered"
-                  required
+                  // required
                 />
                 {/* <button
                   onClick={handleValidateCaptcha}
@@ -138,7 +138,8 @@ const SignIn = () => {
               </div>
               <div className="form-control mt-6">
                 <button
-                  disabled={disabled}
+                  disabled={false}
+                  // disabled={disabled}
                   className="btn btn-primary bg-[#D1A054B2] hover:bg-[#D1A054B2] border-none text-white"
                 >
                   Login
