@@ -1,16 +1,20 @@
 import { CgMenuGridO } from "react-icons/cg";
-import { FaBook } from "react-icons/fa";
+import { FaBook, FaCalendar, FaList, FaWallet } from "react-icons/fa";
 import { FiHome } from "react-icons/fi";
-import { GiHamburgerMenu } from "react-icons/gi";
+
 import { IoIosPeople, IoMdHome } from "react-icons/io";
-import { IoMailOutline } from "react-icons/io5";
+import { IoMailOutline, IoRestaurant } from "react-icons/io5";
 import { MdOutlineShoppingCart } from "react-icons/md";
-import { RiRestaurantLine } from "react-icons/ri";
+
 import { NavLink, Outlet } from "react-router-dom";
 import useCart from "../Hooks/useCart";
+import { BiSolidStar } from "react-icons/bi";
+import useAdmin from "../Hooks/useAdmin";
 
 const Dashboard = () => {
   const [cart] = useCart();
+  const [isAdmin] = useAdmin();
+
   return (
     <div>
       <div className="drawer lg:drawer-open">
@@ -51,41 +55,95 @@ const Dashboard = () => {
             <div className=" uppercase text-2xl font-bold text-center mb-4">
               Bistro Boss
             </div>
-            <NavLink
-              to="/dashboard"
-              className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
-            >
-              <IoMdHome />
-              Admin Home
-            </NavLink>
-            <NavLink
-              to="/dashboard/cart"
-              className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
-            >
-              <RiRestaurantLine />
-              My Cart ({cart.length})
-            </NavLink>
-            <NavLink
-              to="/dashboard"
-              className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
-            >
-              <GiHamburgerMenu />
-              Manage Items
-            </NavLink>
-            <NavLink
-              to="/dashboard"
-              className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
-            >
-              <FaBook />
-              Manage Bookings
-            </NavLink>
-            <NavLink
-              to="/dashboard"
-              className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
-            >
-              <IoIosPeople />
-              All Users
-            </NavLink>
+            {isAdmin ? (
+              <>
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <IoMdHome />
+                  Admin Home
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <IoRestaurant />
+                  Add Items
+                </NavLink>
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <FaList />
+                  Manage Items
+                </NavLink>
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <FaBook />
+                  Manage Bookings
+                </NavLink>
+                <NavLink
+                  to="/dashboard/users"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <IoIosPeople />
+                  All Users
+                </NavLink>
+              </>
+            ) : (
+              <>
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <IoMdHome />
+                  User Home
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <FaCalendar />
+                  Reservation
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <FaWallet />
+                  Payment History
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard/cart"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <IoRestaurant />
+                  My Cart ({cart.length})
+                </NavLink>
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <BiSolidStar />
+                  Add Review
+                </NavLink>
+
+                <NavLink
+                  to="/dashboard"
+                  className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
+                >
+                  <FaBook />
+                  My Bookings
+                </NavLink>
+              </>
+            )}
 
             <div className="divider"></div>
 

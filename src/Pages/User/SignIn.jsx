@@ -11,6 +11,7 @@ import { Helmet } from "react-helmet-async";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import "animate.css";
+import SocialLogin from "../../Components/SocialLogin";
 
 const SignIn = () => {
   const { signUser } = useContext(AuthContext);
@@ -106,15 +107,6 @@ const SignIn = () => {
                   className="input input-bordered"
                   required
                 />
-                <label className="label">
-                  <Link
-                    to="/signup"
-                    href="#"
-                    className="label-text-alt link link-hover"
-                  >
-                    Dont Have an Account?
-                  </Link>
-                </label>
               </div>
               <div className="form-control">
                 <label className="input input-bordered h-fit mb-4 py-2">
@@ -136,6 +128,15 @@ const SignIn = () => {
                   Validate
                 </button> */}
               </div>
+              <label className="label">
+                <Link
+                  to="/signup"
+                  href="#"
+                  className="label-text-alt link link-hover"
+                >
+                  Dont Have an Account?
+                </Link>
+              </label>
               <div className="form-control mt-6">
                 <button
                   disabled={false}
@@ -146,6 +147,7 @@ const SignIn = () => {
                 </button>
               </div>
             </form>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>

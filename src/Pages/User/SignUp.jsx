@@ -6,8 +6,12 @@ import { Helmet } from "react-helmet-async";
 import { useContext } from "react";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
+import useAxiosPublic from "../../Hooks/useAxiosPublic";
+import { BsGoogle } from "react-icons/bs";
+import SocialLogin from "../../Components/SocialLogin";
 
 const SignUp = () => {
+  const axiosPublic = useAxiosPublic();
   const {
     register,
     handleSubmit,
@@ -24,19 +28,28 @@ const SignUp = () => {
     createUser(data.email, data.password)
       .then((result) => {
         const loggedUser = result.user;
-        console.log(loggedUser);
+        // console.log(loggedUser);
         updateUser(data.name, data.photo)
           .then(() => {
-            console.log("updated");
-            reset();
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Successfully Registered!",
-              showConfirmButton: false,
-              timer: 1500,
+            // console.log("updated");
+            const userInfo = {
+              name: data.name,
+              email: data.email,
+            };
+            axiosPublic.post("/users", userInfo).then((res) => {
+              if (res.data.insertedId) {
+                console.log("worked");
+                reset();
+                Swal.fire({
+                  position: "top-end",
+                  icon: "success",
+                  title: "Successfully Registered!",
+                  showConfirmButton: false,
+                  timer: 1500,
+                });
+                navigate("/");
+              }
             });
-            navigate("/");
           })
           .catch((error) => {
             console.error(error.message);
@@ -177,6 +190,7 @@ const SignUp = () => {
                 />
               </div>
             </form>
+            <SocialLogin></SocialLogin>
           </div>
         </div>
       </div>
