@@ -66,14 +66,14 @@ const Dashboard = () => {
                 </NavLink>
 
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/addItem"
                   className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
                 >
                   <IoRestaurant />
                   Add Items
                 </NavLink>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/manageItems"
                   className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
                 >
                   <FaList />
@@ -113,7 +113,7 @@ const Dashboard = () => {
                 </NavLink>
 
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/paymentHistory"
                   className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
                 >
                   <FaWallet />

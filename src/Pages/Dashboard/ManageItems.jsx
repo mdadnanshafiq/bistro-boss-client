@@ -1,18 +1,16 @@
-import { FaRegTrashAlt } from "react-icons/fa";
+import { FaEdit, FaRegTrashAlt } from "react-icons/fa";
 import SectionTitle from "../../Components/SectionTitle/SectionTitle";
-import useCart from "../../Hooks/useCart";
-import Swal from "sweetalert2";
 import useAxiosSecure from "../../Hooks/useAxiosSecure";
+import Swal from "sweetalert2";
+import useMenu from "../../Hooks/useMenu";
 import { Link } from "react-router-dom";
 
-const Cart = () => {
+const ManageItems = () => {
+  const [menu, refetch] = useMenu();
   const axiosSecure = useAxiosSecure();
-  const [cart, refetch] = useCart();
-  const totalPrice = cart.reduce(
-    (total, item) => total + parseFloat(item.price),
-    0
-  );
-  const handleDelete = (id) => {
+
+  const handleDeleteItem = (item) => {
+    // console.log(item._id);
     Swal.fire({
       title: "Are you sure?",
       text: "You won't be able to revert this!",
@@ -21,36 +19,33 @@ const Cart = () => {
       confirmButtonColor: "#3085d6",
       cancelButtonColor: "#d33",
       confirmButtonText: "Yes, delete it!",
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/carts/${id}`).then((res) => {
-          if (res.data.deletedCount > 0) {
-            refetch();
-            Swal.fire({
-              title: "Deleted!",
-              text: "Item has been deleted.",
-              icon: "success",
-            });
-          }
-        });
+        const res = await axiosSecure.delete(`/menu/${item._id}`);
+        console.log(res.data);
+        if (res.data.deletedCount > 0) {
+          // refetch to update the ui
+          refetch();
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${item.name} has been deleted`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
       }
     });
   };
   return (
     <div className="w-full mx-auto bg-base-200 min-h-screen">
       <SectionTitle
-        heading={"WANNA ADD MORE?"}
-        subHeading={"My Cart"}
+        heading={"MANAGE ALL ITEMS"}
+        subHeading={"Hurry Up!"}
       ></SectionTitle>
       <div>
-        <div className="flex justify-around items-center my-6">
-          <h2 className="text-3xl">Total Orders: {cart.length}</h2>
-          <h2 className="text-3xl">Total Price: ${totalPrice}</h2>
-          {cart.length ? (
-            <Link to="/dashboard/payment">
-              <button className="btn btn-accent uppercase">Pay</button>
-            </Link>
-          ) : null}
+        <div className="flex justify-start items-center my-6 ml-4">
+          <h2 className="text-3xl">Total Items: {menu.length}</h2>
         </div>
         <div className="overflow-x-auto bg-base-100 m-2">
           <table className="table">
@@ -61,11 +56,12 @@ const Cart = () => {
                 <th>Item Image</th>
                 <th>Item Name</th>
                 <th>Price</th>
-                <th>Action</th>
+                <th>Update</th>
+                <th>Delete</th>
               </tr>
             </thead>
             <tbody>
-              {cart.map((item, idx) => {
+              {menu.map((item, idx) => {
                 return (
                   <tr key={idx}>
                     <th>{idx + 1}</th>
@@ -88,8 +84,16 @@ const Cart = () => {
                     </td>
                     <td>$ {item.price}</td>
                     <th>
+                      <Link
+                        to={`/dashboard/updateItem/${item._id}`}
+                        className="btn btn-outline btn-circle btn-xs text-amber-500"
+                      >
+                        <FaEdit />
+                      </Link>
+                    </th>
+                    <th>
                       <button
-                        onClick={() => handleDelete(item._id)}
+                        onClick={() => handleDeleteItem(item)}
                         className="btn btn-outline btn-circle btn-xs text-red-500"
                       >
                         <FaRegTrashAlt />
@@ -106,4 +110,4 @@ const Cart = () => {
   );
 };
 
-export default Cart;
+export default ManageItems;
