@@ -3,10 +3,12 @@ import { Link, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import { FiShoppingCart } from "react-icons/fi";
 import useCart from "../../../Hooks/useCart";
+import useAdmin from "../../../Hooks/useAdmin";
 
 const Nav = () => {
   const { user, logOut } = useContext(AuthContext);
   const navigate = useNavigate();
+  const [isAdmin] = useAdmin();
 
   const [cart] = useCart();
 
@@ -29,30 +31,58 @@ const Nav = () => {
           Our Menu
         </Link>
       </>
-      <>
-        <Link to="/order" className="btn">
-          Order Food
-        </Link>
-      </>
-      <>
-        <Link to="/signin" className="btn">
-          Sign In
-        </Link>
-      </>
-      <>
-        <Link to="/signup" className="btn">
-          Sign Up
-        </Link>
-      </>
-      <>
-        <Link to="/dashboard/cart">
-          <button className="btn">
-            <FiShoppingCart />
+      {user ? (
+        isAdmin ? (
+          <>
+            <>
+              <Link to="/order" className="btn">
+                Order Food
+              </Link>
+            </>
+            <>
+              <Link to="/dashboard/adminHome" className="btn">
+                Dashboard
+              </Link>
+            </>
+          </>
+        ) : (
+          <>
+            <>
+              <Link to="/order" className="btn">
+                Order Food
+              </Link>
+            </>
+            <>
+              <Link to="/dashboard/userHome" className="btn">
+                Dashboard
+              </Link>
+            </>
 
-            <div className="badge badge-accent">+{cart.length}</div>
-          </button>
-        </Link>
-      </>
+            <>
+              <Link to="/dashboard/cart">
+                <button className="btn">
+                  <FiShoppingCart />
+
+                  <div className="badge badge-accent">+{cart.length}</div>
+                </button>
+              </Link>
+            </>
+          </>
+        )
+      ) : (
+        <>
+          {/* <>
+            <Link to="/signin" className="btn">
+              Sign In
+            </Link>
+          </> */}
+          <>
+            <Link to="/signup" className="btn">
+              Sign Up
+            </Link>
+          </>
+        </>
+      )}
     </>
   );
   return (

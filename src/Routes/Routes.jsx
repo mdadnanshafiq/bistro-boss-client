@@ -15,6 +15,8 @@ import ManageItems from "../Pages/Dashboard/ManageItems";
 import UpdateItem from "../Pages/Dashboard/UpdateItem";
 import Payment from "../Pages/Dashboard/Payment";
 import PaymentHistory from "../Pages/Dashboard/PaymentHistory";
+import UserHome from "../Pages/Dashboard/UserHome";
+import AdminHome from "../Pages/Dashboard/AdminHome";
 
 export const router = createBrowserRouter([
   {
@@ -64,6 +66,10 @@ export const router = createBrowserRouter([
     ),
     children: [
       {
+        path: "userhome",
+        element: <UserHome></UserHome>,
+      },
+      {
         path: "cart",
         element: <Cart></Cart>,
       },
@@ -74,6 +80,14 @@ export const router = createBrowserRouter([
       {
         path: "paymentHistory",
         element: <PaymentHistory></PaymentHistory>,
+      },
+      {
+        path: "adminHome",
+        element: (
+          <AdminRoute>
+            <AdminHome></AdminHome>
+          </AdminRoute>
+        ),
       },
       {
         path: "users",
@@ -107,7 +121,9 @@ export const router = createBrowserRouter([
           </AdminRoute>
         ),
         loader: ({ params }) =>
-          fetch(`http://localhost:7000/menu/${params.id}`),
+          fetch(
+            `https://bistro-boss-server-eight-umber.vercel.app/menu/${params.id}`
+          ),
       },
     ],
   },

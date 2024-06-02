@@ -58,7 +58,7 @@ const Dashboard = () => {
             {isAdmin ? (
               <>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/adminHome"
                   className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
                 >
                   <IoMdHome />
@@ -97,7 +97,7 @@ const Dashboard = () => {
             ) : (
               <>
                 <NavLink
-                  to="/dashboard"
+                  to="/dashboard/userHome"
                   className="text-lg font-semibold flex justify-start items-center gap-2 uppercase btn btn-ghost"
                 >
                   <IoMdHome />
